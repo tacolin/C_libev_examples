@@ -2,15 +2,15 @@
 
 ## How to run?
 
-1. Open first consonle, and run server mode :
+* Open first consonle, and run server mode :
 
     $ ./main s
 
-2. Open second console, and run client mode :
+* Open second console, and run client mode :
 
     $ ./main c
 
-3. Press CTRL+C to stop the server mode.
+* Press CTRL+C to stop the server mode.
 
 ## Reference
 
