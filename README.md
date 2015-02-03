@@ -1,7 +1,7 @@
 # Libev Examples for Some Advanced(or Strange?) Purposes.
 
 There exists some examples of libev here.
-And ... they are both unusual. XD
+And ... they are all unusual. XD
 
 ## Example Descriptions
 
