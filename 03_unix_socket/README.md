@@ -4,11 +4,11 @@
 
 * Open first consonle, and run server mode :
 
-    $ ./main s
+        $ ./main s
 
 * Open second console, and run client mode :
 
-    $ ./main c
+        $ ./main c
 
 * Press CTRL+C to stop the server mode.
 
