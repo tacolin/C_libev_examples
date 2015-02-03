@@ -99,7 +99,7 @@ static void _recvCallback(struct ev_loop* loop, ev_io *w, int revents)
         // recvlen < 0 : failed
         // recvlen = 0 : connection close
         // stop the ev io, close the recv fd
-        // do forget to free this ev io
+        // do not forget to free this ev io
         //////////////////////////////////////
         ev_io_stop(loop, w);
         close(w->fd);
