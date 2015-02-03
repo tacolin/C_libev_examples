@@ -2,7 +2,7 @@
 
 ## How to run?
 
-* Open first consonle, and run server mode :
+* Open first console, and run server mode :
 
         $ ./main s
 

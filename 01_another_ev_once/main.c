@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <ev.h>
 
-void sigIntCb(struct ev_loop* loop, ev_signal* w, int revents)
+static void _sigIntCb(struct ev_loop* loop, ev_signal* w, int revents)
 {
     perror("SIGINT happens, break the libev ev loop");
     ev_signal_stop(loop, w);
     ev_break(loop, EVBREAK_ALL);
 }
 
-void disposableCb(struct ev_loop* loop, ev_async* w, int revents)
+static void _disposableCb(struct ev_loop* loop, ev_async* w, int revents)
 {
     long event_data = (long)(w->data);
     printf("disposable callback, event_data = %ld\n", event_data);
@@ -23,7 +23,7 @@ void disposableCb(struct ev_loop* loop, ev_async* w, int revents)
     return;
 }
 
-void generateDisposableEvents(int revents, void* arg)
+static void _generateDisposableEvents(int revents, void* arg)
 {
     struct ev_loop* loop = (struct ev_loop*)arg;
 
@@ -48,7 +48,7 @@ void generateDisposableEvents(int revents, void* arg)
         /////////////////////////////////////////////
         disposable = calloc(sizeof(ev_async), 1);
 
-        ev_async_init(disposable, disposableCb);
+        ev_async_init(disposable, _disposableCb);
         ev_async_start(loop, disposable);
         disposable->data = (void*)i;
         ev_async_send(loop, disposable);
@@ -63,13 +63,13 @@ int main(int argc, char const *argv[])
     // for safety, you could use CTRL+C to close your program safely.
     //////////////////////////////////////////////////////////////////
     ev_signal sig;
-    ev_signal_init(&sig, sigIntCb, SIGINT);
+    ev_signal_init(&sig, _sigIntCb, SIGINT);
 
     //////////////////////////////////////////////////////////////////
     // trigger a timer event.
     // when timeout, it generates more events in callback function
     //////////////////////////////////////////////////////////////////
-    ev_once(loop, -1, EV_TIMER, 1.0, generateDisposableEvents, loop);
+    ev_once(loop, -1, EV_TIMER, 1.0, _generateDisposableEvents, loop);
 
     ev_run(loop, 0);
     ev_loop_destroy(loop);

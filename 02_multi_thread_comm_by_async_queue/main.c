@@ -13,16 +13,18 @@ typedef struct myasync
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void _sigIntCallback(struct ev_loop* loop, ev_signal* w, int revents)
+static myqueue _queue;
+
+////////////////////////////////////////////////////////////////////////////////
+
+static void _sigIntCallback(struct ev_loop* loop, ev_signal* w, int revents)
 {
     dprint("SIGINT happens, break the libev ev loop");
     ev_signal_stop(loop, w);
     ev_break(loop, EVBREAK_ALL);
 }
 
-static myqueue _queue;
-
-void _asyncCallback(struct ev_loop* loop, ev_async* w, int revents)
+static void _asyncCallback(struct ev_loop* loop, ev_async* w, int revents)
 {
     char* data = NULL;
     myasync* my = (myasync*)w;
@@ -36,7 +38,7 @@ void _asyncCallback(struct ev_loop* loop, ev_async* w, int revents)
     return;
 }
 
-void* _clientRoutine(void* arg)
+static void* _clientRoutine(void* arg)
 {
     myasync *my = (myasync*)arg;
 
